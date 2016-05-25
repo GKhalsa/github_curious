@@ -7,7 +7,6 @@ class GithubService
     @_connection = Faraday.new(url: "https://api.github.com")
     # @_connection.headers["Authorization"] = "token #{current_user.oauth_token}"
 
-    # ENV["SENDGRID_USER_NAME"]
     @_connection.params["per_page"] = 100
   end
 
