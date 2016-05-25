@@ -42,14 +42,16 @@ class GithubService
     end
   end
 
-  def format_commits
+  def formatted_commits
     commits_hash.map do |commit|
-      {repo: commit[:repo][:name], message: commit[:payload][:commits].first[:message]}
+      unless commit[:payload][:commits].first.nil?
+        {repo: commit[:repo][:name], message: commit[:payload][:commits].first[:message]}
+      end
     end
   end
 
   def organizations
-    get("/users/gkhalsa/events")
+    get("/users/gkhalsa/orgs")
   end
 
   private
