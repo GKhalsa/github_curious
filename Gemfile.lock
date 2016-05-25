@@ -190,9 +190,11 @@ PLATFORMS
 DEPENDENCIES
   byebug
   coffee-rails (~> 4.1.0)
+  faraday
   figaro
   jbuilder (~> 2.0)
   jquery-rails
+  nokogiri
   omniauth-github
   omniauth-oauth2
   pg (~> 0.15)
