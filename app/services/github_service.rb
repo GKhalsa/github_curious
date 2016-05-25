@@ -4,44 +4,27 @@ class GithubService
   # include ApplicationHelper <=need
 
   def initialize
-    @connection = Faraday.new(url: "https://api.github.com")
-    # @connection.headers["Authorization"] = "token #{current_user.oauth_token}"
-    # @connection.headers["Authorization"] = "#{ENV['TOKEN']}"
+    @_connection = Faraday.new(url: "https://api.github.com")
+    # @_connection.headers["Authorization"] = "token #{current_user.oauth_token}"
 
     # ENV["SENDGRID_USER_NAME"]
-    @connection.params["per_page"] = 100
+    @_connection.params["per_page"] = 100
   end
 
-  def get_followers
-    @connection.get("/users/gkhalsa/followers")
+  def followers
+    get("/users/gkhalsa/followers")
   end
 
-  def followers_hash
-    parse(get_followers)
+  def following
+    get("/users/gkhalsa/following")
   end
 
-  def get_following
-    @connection.get("/users/gkhalsa/following")
+  def starred
+    get("/users/gkhalsa/starred")
   end
 
-  def following_hash
-    parse(get_following)
-  end
-
-  def get_starred
-    @connection.get("/users/gkhalsa/starred")
-  end
-
-  def starred_hash
-    parse(get_starred)
-  end
-
-  def get_repos
-    @connection.get("/users/gkhalsa/repos")
-  end
-
-  def repos_hash
-    parse(get_repos)
+  def repos
+    get("/users/gkhalsa/repos")
   end
 
   def contribution_total
@@ -49,26 +32,37 @@ class GithubService
     doc.at('h3:contains("contributions")').text.strip
   end
 
-  def get_commits
-    @connection.get("/users/gkhalsa/events")
+  def commits
+    get("/users/gkhalsa/events")
   end
 
   def commits_hash
-    parse(get_commits).find_all do |commit|
+    commits.find_all do |commit|
       commit[:type] == "PushEvent"
     end
   end
 
-  def get_organizations
-    @connection.get("/users/gkhalsa/events")
+  def format_commits
+    commits_hash.map do |commit|
+      {repo: commit[:repo][:name], message: commit[:payload][:commits].first[:message]}
+    end
   end
 
-  def organization_hash
-    parse(get_organizations)
+  def organizations
+    get("/users/gkhalsa/events")
+  end
+
+  private
+
+  def connection
+    @_connection
+  end
+
+  def get(path)
+    parse(connection.get(path))
   end
 
   def parse(response)
     JSON.parse(response.body, symbolize_names: true)
   end
-
 end
