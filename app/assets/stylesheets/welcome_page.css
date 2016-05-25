@@ -1,0 +1,20 @@
+/*#background {
+  background-position: center 0%;
+}*/
+
+.imagewrap {
+  display:inline-block;
+  position:relative;
+}
+
+.button1 {
+  position:absolute;
+  right:47%;
+  top:50%;
+  /*height: 50px;*/
+  /*width: 140px;*/
+}
+
+.profile-pic {
+  border-radius: 3%;
+}

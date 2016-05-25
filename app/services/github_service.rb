@@ -26,7 +26,7 @@ class GithubService
     get("/users/gkhalsa/repos")
   end
 
-  def contribution_total
+  def self.contribution_total
     doc = Nokogiri::HTML(open("https://www.github.com/gkhalsa"))
     doc.at('h3:contains("contributions")').text.strip
   end
