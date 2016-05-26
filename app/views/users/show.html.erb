@@ -10,8 +10,8 @@
       <div class="row"
      <div>
       <div class="col-md-2"><h5>Followers: <%= link_to @gsm.follower_count, followers_path, class:"text"%></h5></div>
-      <div class="col-md-2"><h5>Starred: <%= link_to @gsm.starred_count%></h5></div>
-      <div class="col-md-2"><h5>Following: <%= link_to @gsm.following_count%></h5></div>
+      <div class="col-md-2"><h5>Starred: <%= @gsm.starred_count%></h5></div>
+      <div class="col-md-2"><h5>Following: <%= link_to @gsm.following_count, following_path%></h5></div>
     </div>
     <!-- </div> -->
       <div class="row">
@@ -34,27 +34,15 @@
       <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="contributions">
           <h4><%= @gsm.total_commits %></h4></br>
-          <% @gsm.commits.each do |commit| %>
-          <ul class="list-group">
-          <li class="list-group-item"><%= commit %></li>
-          </ul>
-          <% end %>
+          <%= render partial: "partials/iterator.html.erb", locals: {activity: @gsm.commits}%>
         </div>
 
         <div role="tabpanel" class="tab-pane" id="repositories">
-          <% @gsm.repos.each do |repo| %>
-          <ul class="list-group">
-            <li class="list-group-item"><%= repo %></li>
-          </ul>
-          <% end %>
+          <%= render partial: "partials/iterator.html.erb", locals: {activity: @gsm.repos}%>
         </div>
 
         <div role="tabpanel" class="tab-pane" id="activity">
-          <% @gsm.following_events.each do |event| %>
-          <ul class="list-group">
-          <li class="list-group-item"><%= event %></li>
-          </ul>
-          <% end %>
+          <%= render partial: "partials/iterator.html.erb", locals: {activity: @gsm.following_events}%>
         </div>
       </div>
 

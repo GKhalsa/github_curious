@@ -2,14 +2,6 @@
   <%= render partial: "partials/navbar.html.erb"%>
 </div>
 
+<h2>Followers</h2>
 
-
-  <div class="row">
-    <% @followers.each do |follower| %>
-      <div class="col-sm-3 col-md-3">
-        <img src=" <%= follower.photo %>" height=200 alt="...">
-        <h3><%= follower.name %></h3>
-        <p></p>
-      </div>
-    <% end %>
-  </div>
+<%= render partial: "partials/follow.html.erb", locals: { follow: @followers } %>

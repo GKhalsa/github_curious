@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   get "/auth/github", as: :github_login
 
   get "/followers", to: "followers#index", as: :followers
+  get "/following", to: "following#index", as: :following
+  get "/data", to: "data#index", as: :data
 
 
   get "/auth/github/callback", to: "sessions#create"

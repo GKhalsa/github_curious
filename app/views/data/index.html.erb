@@ -1,0 +1,40 @@
+<%= render partial: "partials/navbar.html.erb"%>
+
+<div class="col-md-6">
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#contributions" aria-controls="home" role="tab" data-toggle="tab">Popular Repos</a></li>
+    <li role="presentation"><a href="#repositories" aria-controls="profile" role="tab" data-toggle="tab">Popular Issues</a></li>
+    <li role="presentation"><a href="#activity" aria-controls="messages" role="tab" data-toggle="tab">So sad</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="contributions">
+      <h4><% @data.organized_repos.each do |repo|  %></h4></br>
+      <h4><%= link_to repo[:repo], repo[:url] %><h4>
+      <h4>starred: <%= repo[:starred] %><h4>
+      <% end %>
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="repositories">
+      <% @data.organized_issues.each do |issue| %>
+      <h4><%= link_to issue[:title], issue[:url] %></h4>
+      <% end %>
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="activity">
+      <div class="row">
+        <% @data.organized_followers.each do |user| %>
+          <div class="col-sm-4 col-md-4">
+            <img src=" <%= user[:image_link] %>" height=200 alt="...">
+            <h4><%= user[:name] %></h3>
+            <p></p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -12,7 +12,7 @@ module ApplicationHelper
     if current_user
       link_to "welcome", user_path(current_user)
     else
-      link_to "Login", github_login_path      
+      link_to "Login", github_login_path
     end
   end
 

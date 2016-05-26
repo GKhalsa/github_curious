@@ -1,0 +1,6 @@
+<div class='col-md-12'>
+  <%= render partial: "partials/navbar.html.erb"%>
+</div>
+
+<h2>Following</h2>
+<%= render partial: "partials/follow.html.erb", locals: { follow:@following } %>

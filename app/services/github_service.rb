@@ -1,11 +1,12 @@
 require 'open-uri'
 
 class GithubService
+  include SearchHelper
 
   def initialize
     user = Thread.current[:user]
-    token = user.oauth_token
-    @_name = user.name
+    token = user.oauth_token if user
+    @_name = user.name if user
     @_connection = Faraday.new(url: "https://api.github.com")
     @_connection.headers["Authorization"] = "token #{token}"
     @_connection.params["per_page"] = 100
@@ -36,14 +37,10 @@ class GithubService
     get("/users/#{name}/received_events")
   end
 
-  def following_events
-    received_events[0..20].map do |event|
-      {repo: event[:repo][:name], user: event[:actor][:login], occurred_at: event[:created_at]}
-    end
-  end
 
   def commits
-    get("/users/#{name}/events")#, {:per_page => 100}
+    get("/users/#{name}/events")
+
   end
 
   def commits_hash
@@ -52,6 +49,10 @@ class GithubService
 
   def formatted_commits
     formatter(commits_hash)
+  end
+
+  def organizations
+    get("/users/#{name}/orgs")
   end
 
   def find_commits(hash)
@@ -68,25 +69,27 @@ class GithubService
     end
   end
 
-  def organizations
-    get("/users/#{name}/orgs")
+  def following_events
+    received_events[0..20].map do |event|
+      {repo: event[:repo][:name], user: event[:actor][:login], occurred_at: event[:created_at]}
+    end
   end
 
   private
 
-  def connection
-    @_connection
-  end
+    def connection
+      @_connection
+    end
 
-  def get(path)
-    parse(connection.get(path))
-  end
+    def get(path)
+      parse(connection.get(path))
+    end
 
-  def parse(response)
-    JSON.parse(response.body, symbolize_names: true)
-  end
+    def parse(response)
+      JSON.parse(response.body, symbolize_names: true)
+    end
 
-  def name
-    @_name
-  end
+    def name
+      @_name
+    end
 end

@@ -1,13 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe "non logged in user can visit root" do
-  scenario "they can view a login button" do
-    visit root_path
-    expect(current_path).to eq(root_path)
-    expect(page).to have_content("Login")
-  end
-
-  scenario "logged in user can view show page" do
+RSpec.describe "user can visit data page" do
+  scenario "they see different data sets" do
     user = User.from_omniauth({
                  :uid=>"11367377",
                  :info=>{:nickname=>"GKhalsa",
@@ -18,8 +12,12 @@ RSpec.describe "non logged in user can visit root" do
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
     visit root_path
-    expect(page).to have_content("welcome")
     click_on("welcome")
-    expect(current_path).to eq(user_path(user))
+    click_on("Super Kewl Data")
+
+    expect(current_path).to eq(data_path)
+    expect(page).to have_content("Popular Repos")
+    expect(page).to have_content("Popular Issues")
+    expect(page).to have_content("So sad")
   end
 end

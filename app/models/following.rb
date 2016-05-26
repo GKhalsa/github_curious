@@ -10,4 +10,13 @@ class Following < OpenStruct
       Following.new(following_hash)
     end
   end
+
+  def name
+    login
+  end
+
+  def photo
+    avatar_url
+  end
+  
 end

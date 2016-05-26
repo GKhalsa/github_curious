@@ -4,5 +4,5 @@ class FollowersController < ApplicationController
     Thread.current[:user] = current_user
     @followers = Follower.all
   end
-  
+
 end
