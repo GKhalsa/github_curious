@@ -5,14 +5,29 @@
     </div>
 
 
-    <div class="col-md-5"><%= image_tag(current_user.avatar, class: "profile-pic")%></div>
+    <div class="col-md-5"><%= image_tag(current_user.avatar, class: "profile-pic")%>
+      <h4><%= current_user.name%></h4>
+      <div class="row"
+     <div>
+      <div class="col-md-2"><h5>Followers: <%= link_to @gsm.follower_count, followers_path, class:"text"%></h5></div>
+      <div class="col-md-2"><h5>Starred: <%= link_to @gsm.starred_count%></h5></div>
+      <div class="col-md-2"><h5>Following: <%= link_to @gsm.following_count%></h5></div>
+    </div>
+    <!-- </div> -->
+      <div class="row">
+        Organizations:
+        <% @gsm.organizations.each do |organization| %>
+          <%= image_tag(organization.avatar_url, class: "organization-avatar")%>
+          <% end %>
+      </div>
+    </div>
     <div class="col-md-6">
 
       <!-- Nav tabs -->
       <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#contributions" aria-controls="home" role="tab" data-toggle="tab">Contributions</a></li>
         <li role="presentation"><a href="#repositories" aria-controls="profile" role="tab" data-toggle="tab">Repositories</a></li>
-        <li role="presentation"><a href="#activity" aria-controls="messages" role="tab" data-toggle="tab">Activity</a></li>
+        <li role="presentation"><a href="#activity" aria-controls="messages" role="tab" data-toggle="tab">Friend Activity</a></li>
       </ul>
 
       <!-- Tab panes -->
@@ -33,15 +48,16 @@
           </ul>
           <% end %>
         </div>
-        <div role="tabpanel" class="tab-pane" id="activity">Friend</div>
+
+        <div role="tabpanel" class="tab-pane" id="activity">
+          <% @gsm.following_events.each do |event| %>
+          <ul class="list-group">
+          <li class="list-group-item"><%= event %></li>
+          </ul>
+          <% end %>
+        </div>
       </div>
 
     </div>
   </div>
-  <h4><%= current_user.name%></h4>
-  <!-- <div class=> -->
-  <div class="col-md-1"><h5>Followers: <%= link_to @gsm.follower_count, class:"text"%></h5></div>
-  <div class="col-md-1"><h5>Starred: <%= link_to @gsm.starred_count%></h5></div>
-  <div class="col-md-1"><h5>Following: <%= link_to @gsm.following_count%></h5></div>
-  <!-- </div> -->
 </div>

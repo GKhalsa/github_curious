@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   def show
+    user = current_user
+    Thread.current[:user] = user
     @gsm = GithubServicesManager.new
-    # binding.pry
   end
 end

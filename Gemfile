@@ -26,6 +26,7 @@ gem 'omniauth-oauth2'
 gem 'omniauth-github'
 gem 'faraday'
 gem 'nokogiri'
+gem 'simplecov', :require => false, :group => :test
 # gem 'open-uri'
 
 # Use ActiveModel has_secure_password
@@ -42,6 +43,8 @@ group :development, :test do
   gem 'byebug'
   gem 'rspec-rails'
   gem 'pry'
+  gem 'capybara'
+  gem 'launchy'
 end
 
 group :development do

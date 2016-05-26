@@ -11,4 +11,16 @@ class Follower < OpenStruct
     end
   end
 
+  def name
+    login
+  end
+
+  def photo
+    avatar_url
+  end
+
+  def url
+    html_url
+  end
+
 end

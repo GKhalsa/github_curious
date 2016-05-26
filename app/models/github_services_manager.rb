@@ -1,18 +1,19 @@
 class GithubServicesManager
 
-  attr_reader :commit_poro,    :follower_poro,
-              :following_poro, :organization_poro,
-              :repo_poro,      :starred_poro,
-              :contribution_total
+  attr_reader :commit_poro,        :follower_poro,
+              :following_poro,     :organization_poro,
+              :repo_poro,          :starred_poro,
+              :contribution_total, :following_events_poro
 
   def initialize
-    @commit_poro        = Commit.all
-    @follower_poro      = Follower.all
-    @following_poro     = Following.all
-    # @organization_poro  = Organization.all
-    @repo_poro          = Repo.all
-    @starred_poro       = Starred.all
-    @contribution_total = GithubService.contribution_total
+    @commit_poro           = Commit.all
+    @follower_poro         = Follower.all
+    @following_poro        = Following.all
+    @organization_poro     = Organization.all
+    @repo_poro             = Repo.all
+    @starred_poro          = Starred.all
+    @contribution_total    = GithubService.new.contribution_total
+    @following_events_poro = FollowingEvent.all
   end
 
   def commits
@@ -41,6 +42,16 @@ class GithubServicesManager
 
   def starred_count
     starred_poro.count
+  end
+
+  def following_events
+    following_events_poro[0..6].map do |event|
+      "repo worked on: #{event.repo}, by: #{event.user}"
+    end
+  end
+
+  def organizations
+    organization_poro
   end
 
 end
